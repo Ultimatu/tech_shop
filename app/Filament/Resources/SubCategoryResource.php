@@ -17,8 +17,12 @@ class SubCategoryResource extends Resource
 {
     protected static ?string $model = SubCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-tag';
 
+    protected static ?string $navigationGroup = 'Catalogue';
+
+    protected static ?string $navigationLabel = 'Sous-catégorie';
     public static function form(Form $form): Form
     {
         return $form

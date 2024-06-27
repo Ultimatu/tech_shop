@@ -17,7 +17,13 @@ class AdminResource extends Resource
 {
     protected static ?string $model = Admin::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-user-group';
+
+    protected static ?string $navigationGroup = 'Admins';
+
+    protected static ?string $navigationLabel = 'Admin';
 
     public static function form(Form $form): Form
     {
@@ -25,16 +31,28 @@ class AdminResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(50),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->maxLength(50),
+                Forms\Components\TextInput::make('phone_number')
+                    ->required()
+                    ->maxLength(20),
+                Forms\Components\TextInput::make('address')
+                    ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\TextInput::make('city')
+                    ->required()
+                    ->maxLength(50),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
                     ->maxLength(255),
+                Forms\Components\FileUpload::make('profile_picture')
+                    ->image()
+                    ->avatar()
+                    ->nullable(),
             ]);
     }
 

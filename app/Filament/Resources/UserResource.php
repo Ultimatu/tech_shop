@@ -17,7 +17,20 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-user-group';
+
+    protected static ?string $navigationGroup = 'Utilisateurs';
+
+    protected static ?string $navigationLabel = 'Utilisateur';
+
+
+    protected static function booted()
+    {
+        static::query(function (Builder $query) {
+            $query->withoutGlobalScope(SoftDeletingScope::class);
+        });
+    }
 
     public static function form(Form $form): Form
     {
@@ -41,10 +54,10 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('profile_picture')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('assets/images/default-user.png'),
+                Forms\Components\FileUpload::make('profile_picture')
+                    ->image()
+                    ->avatar()
+                    ->nullable(),
             ]);
     }
 
@@ -63,8 +76,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('profile_picture')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('profile_picture')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

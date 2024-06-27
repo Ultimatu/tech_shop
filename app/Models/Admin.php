@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Filament\Actions\Concerns\CanNotify;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel\Concerns\HasNotifications;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasNotifications, CanNotify;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +24,11 @@ class Admin extends Authenticatable implements FilamentUser, HasAvatar
         'name',
         'email',
         'password',
-        'image_avatar',
+        'profile_picture',
+        'email_verified_at',
+        'address',
+        'phone_number',
+        'city'
     ];
 
     /**

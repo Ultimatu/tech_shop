@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -31,10 +32,11 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ]);
+        event(new Registered($user));
 
         auth()->login($user);
 
-        return redirect()->intended('dashboard');
+        return redirect()->intended('home');
     }
 
 

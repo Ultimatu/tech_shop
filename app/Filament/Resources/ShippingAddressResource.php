@@ -17,8 +17,13 @@ class ShippingAddressResource extends Resource
 {
     protected static ?string $model = ShippingAddress::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-map';
 
+    protected static ?string $navigationGroup = 'Utilisateurs';
+
+    protected static ?string $navigationLabel = 'Addresse de livraison';
+    
     public static function form(Form $form): Form
     {
         return $form

@@ -17,7 +17,12 @@ class ReviewResource extends Resource
 {
     protected static ?string $model = Review::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-chat-bubble-bottom-center-text';
+
+    protected static ?string $navigationGroup = 'Utilisateurs';
+
+    protected static ?string $navigationLabel = 'Avis';
 
     public static function form(Form $form): Form
     {
