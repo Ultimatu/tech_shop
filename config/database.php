@@ -108,6 +108,18 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' =>  env('DB_DSN', 'mongodb://localhost:27017'),
+            'database' => env('DB_DATABASE', 'laravel'),
+            'options' => [
+                'maxPoolSize' => env('DB_MAX_POOL_SIZE', 10),
+                'w' => env('DB_W', 1),
+            ],
+            'driverOptions' => [
+                'serverApi' => env('DB_SERVER_API', 'latest'),
+            ],
+        ],
 
     ],
 
