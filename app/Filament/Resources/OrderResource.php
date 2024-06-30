@@ -12,6 +12,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Columns;
+
+
 
 class OrderResource extends Resource
 {
@@ -74,8 +78,11 @@ class OrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading('Aucun élément trouvé')
+            ->emptyStateDescription('Il n\'y a aucun éléments enregistré.')
+            ->emptyStateIcon('heroicon-s-question-mark-circle')
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('user.first_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('shipping_fee')
@@ -123,9 +130,7 @@ class OrderResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

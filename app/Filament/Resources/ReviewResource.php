@@ -50,6 +50,9 @@ class ReviewResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading('Aucun élément trouvé')
+            ->emptyStateDescription('Il n\'y a aucun éléments enregistré.')
+            ->emptyStateIcon('heroicon-s-question-mark-circle')
             ->columns([
                 Tables\Columns\TextColumn::make('product_id')
                     ->numeric()

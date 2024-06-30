@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->dateTime('payment_date');
-            $table->double('amount', 12, 2);
+            $table->double('amount');
             $table->string('payment_method');
             $table->string('status')->default('pending');
             $table->timestamps();

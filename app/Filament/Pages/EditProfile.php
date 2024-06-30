@@ -24,14 +24,14 @@ class EditProfile extends Page implements HasForms
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $activeNavigationIcon = 'heroicon-s-user';
 
-    protected static ?int $navigationSort = 20;
+    protected static ?int $navigationSort = 40;
 
 
     protected static ?string $title = 'Profil';
     protected static ?string $modelLabel = 'Profil';
     protected static ?string $navigationLabel = 'Profil';
 
-    protected static ?string $navigationGroup = 'Paramètres';
+    protected static ?string $navigationGroup = 'Paramètres du site';
 
 
     protected static string $view = 'filament.pages.edit-profile';

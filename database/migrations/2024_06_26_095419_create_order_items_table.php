@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->integer('quantity')->default(1);
-            $table->double('total', 12, 2);
+            $table->double('total');
             $table->string('status')->default('pending');
             $table->dateTime('canceled_at')->nullable();
             $table->dateTime('delivered_at')->nullable();

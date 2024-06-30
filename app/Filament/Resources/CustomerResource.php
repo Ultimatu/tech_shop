@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
+use App\Models\Order;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,53 +17,49 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?int $navigationSort = 6;
+
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $activeNavigationIcon = 'heroicon-s-user-group';
 
     protected static ?string $navigationGroup = 'Utilisateurs';
 
     protected static ?string $navigationLabel = 'Client';
+    protected static ?string $pluralModelLabel = 'Clients';
 
 
-    protected static function booted()
+    public static function getEloquentQuery(): Builder
     {
-        static::query(function (Builder $query) {
-            $query->whereHas('orders')->withoutGlobalScope(SoftDeletingScope::class);
-        });
+        return parent::getEloquentQuery()->whereHas('orders');
     }
+    
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return false;
+    }
+
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('first_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('last_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone_number')
-                    ->tel()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('profile_picture')
-                    ->image()
-                    ->avatar()
-                    ->nullable(),
+                //    
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading('Aucun client trouvé')
+            ->emptyStateDescription('Il n\'y a aucun client pour le moment. Nb: Les clients sont les utilisateurs qui ont effectué des commandes.')
+            ->emptyStateIcon('heroicon-s-user-group')
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
                     ->searchable(),

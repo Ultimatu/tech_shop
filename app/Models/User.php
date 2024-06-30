@@ -57,15 +57,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Order::class);
     }
 
+
     public function payments()
     {
         return $this->hasMany(Payment::class);
     }
 
-
-    public function getProfilePictureAttribute($value)
+    public function reviews()
     {
-        return $value ? $value : 'assets/images/default-user.png';
+        return $this->hasMany(Review::class);
+    }
+
+
+    public function getProfilePictureUrlAttribute(): string|null
+    {
+        return $this->profile_picture ? ( str_contains($this->profile_picture, 'assets') || str_contains($this->profile_picture, 'storage') ? url($this->profile_picture) : asset('storage/' . $this->profile_picture)) : asset('assets/images/default-user.png');
+    }
+
+    public function setProfilePictureAttribute($value): void
+    {
+        $this->attributes['profile_picture'] = $value ? (str_contains($value, 'assets') ? $value : 'storage/' . $value) : null;
     }
 
     public function cart()

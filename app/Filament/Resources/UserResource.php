@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+    protected static ?int $navigationSort = 34;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $activeNavigationIcon = 'heroicon-s-user-group';
@@ -37,33 +38,64 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('first_name')
+                    ->label('Nom')
+                    ->hint('Veuillez saisir le nom de l\'utilisateur')
+                    ->hintIcon('heroicon-s-information-circle')
+                    ->prefixIcon('heroicon-s-user')
+                    ->prefixIconColor('info')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(50),
                 Forms\Components\TextInput::make('last_name')
+                    ->label('Prénom')
+                    ->hint('Veuillez saisir le nom de l\'utilisateur')
+                    ->hintIcon('heroicon-s-information-circle')
+                    ->prefixIcon('heroicon-s-user')
+                    ->prefixIconColor('info')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone_number')
-                    ->tel()
-                    ->maxLength(255),
+                    ->label('Numéro de téléphone')
+                    ->hint('Veuillez saisir le numéro de téléphone de l\'utilisateur')
+                    ->hintIcon('heroicon-s-information-circle')
+                    ->prefixIcon('heroicon-s-phone')
+                    ->prefixIconColor('warning')
+                    ->maxLength(20),
                 Forms\Components\TextInput::make('email')
+                    ->label('Adresse email')
+                    ->hint('Veuillez saisir l\'adresse email de l\'utilisateur')
+                    ->hintIcon('heroicon-s-information-circle')
+                    ->prefixIcon('heroicon-s-envelope')
+                    ->prefixIconColor('warning')
                     ->email()
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                    ->maxLength(50),
+                Forms\Components\DateTimePicker::make('email_verified_at')->label('Email vérifié le')->nullable(),
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->label('Mot de passe')
+                    ->revealable()
+                    ->hint('Veuillez saisir le mot de passe de l\'utilisateur')
+                    ->hintIcon('heroicon-s-information-circle')
+                    ->prefixIcon('heroicon-s-lock-closed')
+                    ->prefixIconColor('danger')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('profile_picture')
                     ->image()
+                    ->label('Photo de profil')
+                    ->hint('Veuillez choisir une photo de profil pour l\'utilisateur')
+                    ->hintIcon('heroicon-s-information-circle')
                     ->avatar()
                     ->nullable(),
-            ]);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading('Aucun élément trouvé')
+            ->emptyStateDescription('Il n\'y a aucun éléments enregistré.')
+            ->emptyStateIcon('heroicon-s-question-mark-circle')
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
                     ->searchable(),

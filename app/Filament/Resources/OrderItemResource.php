@@ -23,7 +23,7 @@ class OrderItemResource extends Resource
     protected static ?string $navigationGroup = 'Commandes';
 
     protected static ?string $navigationLabel = 'Article de commande';
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -55,6 +55,9 @@ class OrderItemResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading('Aucun élément trouvé')
+            ->emptyStateDescription('Il n\'y a aucun éléments enregistré.')
+            ->emptyStateIcon('heroicon-s-question-mark-circle')
             ->columns([
                 Tables\Columns\TextColumn::make('order_id')
                     ->numeric()

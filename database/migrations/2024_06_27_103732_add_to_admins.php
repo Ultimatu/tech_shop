@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::table('admins', function (Blueprint $table) {
             $table->string('phone_number')->nullable()->after('email')->unique();
             $table->string('profile_picture')->nullable()->after('phone_number');
-            $table->string('address')->nullable()->after('profile_picture');
             $table->string('city')->nullable()->after('address');
         });
     }

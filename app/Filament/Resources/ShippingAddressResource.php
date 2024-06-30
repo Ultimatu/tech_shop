@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ShippingAddressResource extends Resource
 {
     protected static ?string $model = ShippingAddress::class;
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $navigationIcon = 'heroicon-o-map';
     protected static ?string $activeNavigationIcon = 'heroicon-s-map';
@@ -23,7 +24,7 @@ class ShippingAddressResource extends Resource
     protected static ?string $navigationGroup = 'Utilisateurs';
 
     protected static ?string $navigationLabel = 'Addresse de livraison';
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -70,6 +71,9 @@ class ShippingAddressResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading('Aucun élément trouvé')
+            ->emptyStateDescription('Il n\'y a aucun éléments enregistré.')
+            ->emptyStateIcon('heroicon-s-question-mark-circle')
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
