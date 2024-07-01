@@ -18,6 +18,7 @@ class Order extends Model
         'payment_status',
         'shipping_method',
         'shipping_address_id',
+        'billing_address_id',
         'paid_at',
         'canceled_at',
         'shipped_at',
@@ -48,6 +49,10 @@ class Order extends Model
     public function shippingAddress()
     {
         return $this->belongsTo(ShippingAddress::class);
+    }
+
+    public function billingAddress(){
+        return $this->belongsTo(BillingAddress::class);
     }
 
 

@@ -9,6 +9,7 @@
         "filament/filament": "^3.2",
         "filament/notifications": "^3.2",
         "laravel/framework": "^11.9",
+        "laravel/reverb": "@beta",
         "laravel/tinker": "^2.9",
         "mongodb/laravel-mongodb": "^4.4"
     },

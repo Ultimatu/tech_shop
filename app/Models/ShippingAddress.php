@@ -43,6 +43,10 @@ class ShippingAddress extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
     /**
      * Get the full address.
      *

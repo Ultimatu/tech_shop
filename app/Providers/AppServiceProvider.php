@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\WebSiteInfo;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\ServiceProvider;
@@ -40,6 +41,13 @@ class AppServiceProvider extends ServiceProvider
                 ->line('Ce lien de réinitialisation de mot de passe expirera dans :count minutes.', ['count' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire')])
                 ->line('Si vous n\'avez pas demandé de réinitialisation de mot de passe, aucune autre action n\'est requise.')
                 ->salutation('Cordialement, ' . config('app.name'));
+        });
+
+        //sharing data with all views
+        view()->composer('*', function ($view) {
+            $webSiteInfo = WebSiteInfo::where('is_active', true)->first();
+            $view->with('appName', config('app.name'));
+            $view->with('webSiteInfo', $webSiteInfo);
         });
     }
 }

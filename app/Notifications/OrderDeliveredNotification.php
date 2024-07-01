@@ -11,12 +11,14 @@ class OrderDeliveredNotification extends Notification
 {
     use Queueable;
 
+    public string $orderNumber;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct (string $orderNumber)
     {
-        //
+        $this->orderNumber = $orderNumber;
     }
 
     /**
@@ -26,7 +28,7 @@ class OrderDeliveredNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail' , 'database'];
     }
 
     /**
@@ -35,9 +37,11 @@ class OrderDeliveredNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Commande livrée')
+                    ->line('Votre commande n°'.$this->orderNumber.' a été livrée.')
+                    ->action('Voir les détails', url('/'))
+                    ->line('Merci de votre confiance.')
+                    ->salutation('L\'équipe '.config('app.name'));
     }
 
     /**

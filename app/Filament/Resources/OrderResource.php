@@ -27,6 +27,24 @@ class OrderResource extends Resource
     protected static ?string $navigationGroup = 'Commandes';
 
     protected static ?string $navigationLabel = 'Commande';
+
+    protected static ?string $pluralModelLabel = "Commandes";
+
+    public static function canCreate():bool
+    {
+        return false;
+    }
+
+    public static function canDelete($record):bool 
+    {
+        return false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -135,9 +153,9 @@ class OrderResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -154,6 +172,7 @@ class OrderResource extends Resource
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrder::route('/create'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
+            'show' => Pages\ViewOrder::route('/{record}/show')
         ];
     }
 }
